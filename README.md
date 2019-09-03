@@ -6,4 +6,5 @@
 
 
 ### 웹애플리케이션으로 제작하였습니다.
-### 주소:https://junuu.github.io/Overwatch_Calculator_Web
+### 웹 주소:https://junuu.github.io/Overwatch_Calculator_Web
+### 깃허브 주소: https://github.com/Junuu/Overwatch_Calculator_Web
