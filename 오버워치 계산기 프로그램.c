@@ -1,6 +1,6 @@
 /*
-¿À¹ö¿öÄ¡ Á¡¼ö °è»ê ÇÁ·Î±×·¥
-ÀÛ¼ºÀÚ: ±èÁØ¿ì
+ì˜¤ë²„ì›Œì¹˜ ì ìˆ˜ ê³„ì‚° í”„ë¡œê·¸ë¨
+ì‘ì„±ì: ê¹€ì¤€ìš°
 */
 
 #include <stdio.h>
@@ -17,6 +17,10 @@ int p4000to4100;
 int p4100to4200;
 int p4200to4300;
 int p4300to4400;
+int p4400to4450;
+int p4450to4500;
+int p4500to4550;
+int p4550to4600;
 
 void set_price_team()
 {
@@ -31,7 +35,21 @@ void set_price_team()
 	p4100to4200=40000;
 	p4200to4300=70000;
 	p4300to4400=100000;
+	p4400to4450=110000;
+	p4450to4500=120000;
+	p4500to4550=240000;
+	p4550to4600=400000;
+}
 
+void set_price_team_duo()
+{
+	p0to2000=6000;
+	p2000to2500=7500;
+	p2500to3000=8000;
+	p3000to3250=10000;
+	p3250to3500=12000;
+	p3500to3750=19000;
+	p3750to4000=27000;
 }
 
 void set_price_not_team()
@@ -47,12 +65,59 @@ void set_price_not_team()
 	p4100to4200=30000;
 	p4200to4300=50000;
 	p4300to4400=65000;
+	p4400to4450=80000;
+	p4450to4500=90000;
 
 }
-int calculate(int startscore,int finishscore)
+int calculate(int startscore,int finishscore,int check_team)
 {
 	int price=0;
 
+	if (check_team==3)
+	{
+		while(startscore!=finishscore)
+	{
+		if(startscore<2000)
+		{
+			price=price+(p0to2000/50);
+		}
+		else if(startscore<2500)
+		{
+			price=price+(p2000to2500/50);
+		}
+		else if(startscore<3000)
+		{
+			price=price+(p2500to3000/50);
+		}	
+		else if(startscore<3250)
+		{
+			price=price+(p3000to3250/50);
+		}
+		else if(startscore<3500)
+		{
+			price=price+(p3250to3500/50);
+		}
+		else if(startscore<3750)
+		{
+			price=price+(p3500to3750/50);
+		}
+		else if(startscore<4000)
+		{
+			price=price+(p3750to4000/50);
+		}
+		else
+		{
+			printf("ERROR: ê³„ì‚°í—ˆìš©ë²”ìœ„ ì´ˆê³¼\n");
+			printf("4000ê¹Œì§€ ê³„ì‚°ëœ ê°€ê²©ì„ ë°˜í™˜í•©ë‹ˆë‹¤\n");
+			return price;
+
+		}
+		startscore++;
+	}
+		return price;
+	}
+	else
+	{
 	while(startscore!=finishscore)
 	{
 		if(startscore<2000)
@@ -103,29 +168,59 @@ int calculate(int startscore,int finishscore)
 		{
 			price=price+(p4300to4400/50);
 		}
+		else if(startscore<4450)
+		{
+			price=price+(p4400to4450/50);
+		}
+		else if(startscore<4500)
+		{
+			price=price+(p4450to4500/50);
+		}
 		else
 		{
-			printf("ERROR: °è»êÇã¿ë¹üÀ§ ÃÊ°ú\n");
-			printf("4400±îÁö °è»êµÈ °¡°İÀ» ¹İÈ¯ÇÕ´Ï´Ù\n");
-			return price;
+			if(check_team!=1) //ê¸°ì‚¬
+			{
+				printf("ERROR: ê³„ì‚°í—ˆìš©ë²”ìœ„ ì´ˆê³¼\n");
+				printf("4500ê¹Œì§€ ê³„ì‚°ëœ ê°€ê²©ì„ ë°˜í™˜í•©ë‹ˆë‹¤\n");
+				return price;
+			}
+			else //íŒ€ì¥
+			{
+				if(startscore<4550)
+				{
+					price=price+(p4500to4550/50);
+				}
+				else if(startscore<4600)
+				{
+					price=price+(p4550to4600/50);
+				}
+				else
+				{
+					printf("ERROR: ê³„ì‚°í—ˆìš©ë²”ìœ„ ì´ˆê³¼\n");
+					printf("4600ê¹Œì§€ ê³„ì‚°ëœ ê°€ê²©ì„ ë°˜í™˜í•©ë‹ˆë‹¤\n");
+					return price;
+				}
+				
+			}
 		}
 		startscore++;
 	}
 
 	return price;
+	}
 }
 void simple_introduce()
 {
-	printf("¿À¹ö¿öÄ¡ Á¡¼ö °è»ê±â\n");
-	printf("\nÆÀÀå¿ë,±â»ç¿ë °è»ê ¼±ÅÃ\n");
-	printf("1¹øÀ» ÀÔ·ÂÇÏ½Ã¸é ÆÀÀå¿ë\n2¹øÀ» ÀÔ·ÂÇÏ½Ã¸é ±â»ç¿ëÀÔ´Ï´Ù.\n");
+	printf("ì˜¤ë²„ì›Œì¹˜ ì ìˆ˜ ê³„ì‚°ê¸°\n");
+	printf("\níŒ€ì¥ìš©,ê¸°ì‚¬ìš© ê³„ì‚° ì„ íƒ\n");
+	printf("1ë²ˆì„ ì…ë ¥í•˜ì‹œë©´ íŒ€ì¥ìš©\n2ë²ˆì„ ì…ë ¥í•˜ì‹œë©´ ê¸°ì‚¬ìš©ì…ë‹ˆë‹¤.\n3ë²ˆì„ ì…ë ¥í•˜ì‹œë©´ íŒ€ì¥ìš©ë“€ì˜¤ê°€ê²©ì…ë‹ˆë‹¤.\n");
 
 }
 
 void simple_example()
 {
-	printf("\nÀÔ·Â ¿¹½Ã\n3500 4000\n\n");
-	printf("Ãâ·Â ¿¹½Ã\n3500Á¡¿¡¼­ 4000Á¡ °è»êÀ» ½ÃÀÛÇÕ´Ï´Ù.\n\n");	
+	printf("\nì…ë ¥ ì˜ˆì‹œ\n3500 4000\n\n");
+	printf("ì¶œë ¥ ì˜ˆì‹œ\n3500ì ì—ì„œ 4000ì  ê³„ì‚°ì„ ì‹œì‘í•©ë‹ˆë‹¤.\n\n");	
 }
 void main()
 {
@@ -137,7 +232,7 @@ void main()
 	
    simple_introduce();
 
-	printf("¼ıÀÚ ÀÔ·Â:");
+	printf("ìˆ«ì ì…ë ¥:");
 	scanf("%d",&check_team);
 		
    while(1)
@@ -146,19 +241,23 @@ void main()
 	   {
 		   set_price_team();
 	   }
-	   else
+	   else if(check_team==2)
 	   {
 		   set_price_not_team();
 	   }
+	   else
+	   {
+		   set_price_team_duo();
+	   }
 		
 		simple_example();
-		printf("½ÃÀÛÁ¡¼ö¿Í ¸¶Áö¸·Á¡¼ö¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä:");
+		printf("ì‹œì‘ì ìˆ˜ì™€ ë§ˆì§€ë§‰ì ìˆ˜ë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”:");
 		scanf("%d %d",&startscore ,&finishscore);
 
-		printf("\n%dÁ¡¿¡¼­ %dÁ¡ °è»êÀ» ½ÃÀÛÇÕ´Ï´Ù\n\n\n",startscore, finishscore);
+		printf("\n%dì ì—ì„œ %dì  ê³„ì‚°ì„ ì‹œì‘í•©ë‹ˆë‹¤\n\n\n",startscore, finishscore);
 
-		price=calculate(startscore,finishscore);				
-		printf("°è»ê °¡°İ : %d",price);
+		price=calculate(startscore,finishscore,check_team);				
+		printf("ê³„ì‚° ê°€ê²© : %d",price);
 		printf("\n");
    }
    
