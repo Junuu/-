@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <windows.h>
 
+
 int p0to2000;   
 int p2000to2500;
 int p2500to3000;
@@ -69,11 +70,131 @@ void set_price_not_team()
 	p4450to4500=90000;
 
 }
+void set_price_not_team_duo()
+{
+	p0to2000=3900;
+	p2000to2500=4550;
+	p2500to3000=5200;
+	p3000to3250=7150;
+	p3250to3500=8450;
+	p3500to3750=13500;
+	p3750to4000=18000;
+}
+void batch_calculate(int startscore,int win_count)
+{
+	int result=0;
+	printf("배치계산을 시작합니다.\n");
+	if(startscore< 3000)
+  {
+    result= 3000* win_count;
+  }
+  else if(startscore<3250)
+  {
+    result= 3500* win_count;
+  }
+  else if(startscore<3500)
+  {
+    result= 4000* win_count;
+  }
+  else if(startscore<3750)
+  {
+    result= 5000* win_count;
+  }
+  else if(startscore<4000)
+  {
+    result= 6000* win_count;
+  }
+  else if(startscore<4100)
+  {
+    result= 9000* win_count;
+  }
+  else if(startscore<4200)
+  {
+    result= 10000* win_count;
+  }
+  else if(startscore<4300)
+  {
+    result= 12000* win_count;
+  }
+  else if(startscore<4400)
+  {
+    result= 13000* win_count;
+  }
+  else if(startscore<4450)
+  {
+    result= 14000* win_count;
+  }
+  else if(startscore<4500)
+  {
+    result= 16000* win_count;
+  }
+  else
+  {
+    printf("ERROR : 4500 이하까지만 계산 가능합니다.");
+	printf("계산된 가격: %d\n",result);
+    return;
+  }
+  SetConsoleTextAttribute(GetStdHandle( STD_OUTPUT_HANDLE), 4 ) ;
+  printf("계산된 가격: %d\n",result);
+  SetConsoleTextAttribute(GetStdHandle( STD_OUTPUT_HANDLE), 7 ) ;				
+}
+
+void seungmu_calculate(int startscore,int count)
+{
+	int result=0;
+	printf("승무계산을 시작합니다.\n");
+	if(startscore< 3000)
+  {
+    result= 2000* count;
+  }
+  else if(startscore<3250)
+  {
+    result= 3000* count;
+  }
+  else if(startscore<3500)
+  {
+    result= 3000* count;
+  }
+  else if(startscore<3750)
+  {
+    result= 3000* count;
+  }
+  else if(startscore<4000)
+  {
+    result= 3000* count;
+  }
+  else if(startscore<4100)
+  {
+    result= 4000* count;
+  }
+  else if(startscore<4200)
+  {
+    result= 4000* count;
+  }
+  else if(startscore<4300)
+  {
+    result= 4500* count;
+  }
+  else if(startscore<4400)
+  {
+    result= 4500* count;
+  }  
+  else
+  {
+    printf("ERROR : 4400 이하까지만 계산 가능합니다.");
+	printf("계산된 가격: %d\n",result);
+    return;
+  }
+  SetConsoleTextAttribute(GetStdHandle( STD_OUTPUT_HANDLE), 4 ) ;
+  printf("계산된 가격: %d\n",result);
+  SetConsoleTextAttribute(GetStdHandle( STD_OUTPUT_HANDLE), 7 ) ;				
+}
+
 int calculate(int startscore,int finishscore,int check_team)
 {
 	int price=0;
 
-	if (check_team==3)
+	if (check_team==3 || check_team==4) /*듀오가격일 경우 4000까지 계산가능 조건문*/
 	{
 		while(startscore!=finishscore)
 	{
@@ -213,7 +334,7 @@ void simple_introduce()
 {
 	printf("오버워치 점수 계산기\n");
 	printf("\n팀장용,기사용 계산 선택\n");
-	printf("1번을 입력하시면 팀장용\n2번을 입력하시면 기사용입니다.\n3번을 입력하시면 팀장용듀오가격입니다.\n");
+	printf("1번을 입력하시면 팀장용\n2번을 입력하시면 기사용입니다.\n3번을 입력하시면 팀장용듀오가격입니다.\n4번을 입력하시면 기사용듀오가격입니다.\n5번을 입력하시면 기사용승무가격입니다.\n");
 
 }
 
@@ -221,6 +342,9 @@ void simple_example()
 {
 	printf("\n입력 예시\n3500 4000\n\n");
 	printf("출력 예시\n3500점에서 4000점 계산을 시작합니다.\n\n");	
+
+	printf("\n입력 예시\n3500 10\n\n");
+	printf("출력 예시\n배치계산을 시작합니다.\n\n");	
 }
 void main()
 {
@@ -245,19 +369,49 @@ void main()
 	   {
 		   set_price_not_team();
 	   }
-	   else
+	   else if(check_team==3)
 	   {
 		   set_price_team_duo();
 	   }
-		
-		simple_example();
-		printf("시작점수와 마지막점수를 입력해주세요:");
-		scanf("%d %d",&startscore ,&finishscore);
+	   else if(check_team==4)
+	   {
+		   set_price_not_team_duo();
+	   }
+	   else
+	   {
 
+	   }
+		
+		simple_example();								
+		if(check_team==5)
+		{			
+			printf("시작점수와 판수를 입력해주세요:");
+			scanf("%d %d",&startscore ,&finishscore);
+			seungmu_calculate(startscore,finishscore);
+			continue;
+		}
+		else
+		{
+			printf("시작점수와 마지막점수를 입력해주세요:");
+			scanf("%d %d",&startscore ,&finishscore);
+		}
+		if(finishscore <= 10 && finishscore>0 &&check_team==2) /* 기사용계산기이며 마무리점수가 0~10 사이일때는 배치계산적용*/
+		{				
+			batch_calculate(startscore,finishscore);
+			continue;
+		}		
+		if(finishscore < startscore)
+		{
+			printf("\nERROR:마지막점수보다 시작점수가 더 큽니다\n");
+			continue;
+		}
+		
 		printf("\n%d점에서 %d점 계산을 시작합니다\n\n\n",startscore, finishscore);
 
-		price=calculate(startscore,finishscore,check_team);				
+		price=calculate(startscore,finishscore,check_team);		
+		SetConsoleTextAttribute(GetStdHandle( STD_OUTPUT_HANDLE), 4 ) ;
 		printf("계산 가격 : %d",price);
+		SetConsoleTextAttribute(GetStdHandle( STD_OUTPUT_HANDLE), 7 ) ;
 		printf("\n");
    }
    
